@@ -46,7 +46,6 @@ struct LoadingAnimationView: UIViewRepresentable {
                 animationIsFinished = true
                 print("Animation finished successfully")
             } else {
-                // Do something when the animation is interrupted
                 print("Animation was interrupted")
             }
         }

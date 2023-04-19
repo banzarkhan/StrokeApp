@@ -11,11 +11,7 @@ import Speech
 
 class FaceViewModel: ObservableObject {
     @Published var smileIsDetected = false
-    @Published var mainTestVM: MainTestViewModel
-    
-    init(mainTestVM: MainTestViewModel){
-        self.mainTestVM = mainTestVM
-    }
+    @Published var mouthPosition: MouthPosition = .none
     
     let syntesizer = AVSpeechSynthesizer()
     

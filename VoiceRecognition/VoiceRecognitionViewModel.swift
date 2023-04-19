@@ -11,7 +11,7 @@ import Speech
 class VoiceRecognitionViewModel: NSObject, ObservableObject, AVSpeechSynthesizerDelegate {
     @Published private(set) var recognizedText = ""
     @Published private(set) var isRunning = false
-    @Published var mainTestViewModel: MainTestViewModel
+    @Published var speechCheck: SpeechCheck = .none
     @Published var recognitionIsFinished = false
     
     let customPhrase = "The sky is blue"
@@ -23,8 +23,7 @@ class VoiceRecognitionViewModel: NSObject, ObservableObject, AVSpeechSynthesizer
     var recognitionTask: SFSpeechRecognitionTask?
     let audioEngine = AVAudioEngine()
     
-    init(mainTestViewModel: MainTestViewModel) {
-        self.mainTestViewModel = mainTestViewModel
+    override init() {
         super.init()
         syntesizer.delegate = self
     }
@@ -68,7 +67,6 @@ class VoiceRecognitionViewModel: NSObject, ObservableObject, AVSpeechSynthesizer
                 }
             }
         }
-        
         catch {
         }
     }
@@ -93,9 +91,15 @@ class VoiceRecognitionViewModel: NSObject, ObservableObject, AVSpeechSynthesizer
     
     func speechTest () {
         if recognizedText == customPhrase {
-            mainTestViewModel.voiceTestViewModel.voiceTest = true
+            speechCheck = .good
         } else {
-            mainTestViewModel.voiceTestViewModel.voiceTest = false
+            speechCheck = .bad
         }
     }
+}
+
+enum SpeechCheck {
+    case good
+    case bad
+    case none
 }

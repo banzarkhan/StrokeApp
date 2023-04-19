@@ -9,27 +9,76 @@ import SwiftUI
 
 struct OverlayFaceView: View {
     @ObservedObject var faceVM: FaceViewModel
+    @State var messageIsOpen = false
+    @Binding var nextStep: Bool
     
     var body: some View {
         ZStack {
-            Rectangle()
-                .fill(.linearGradient(Gradient(colors: faceVM.smileIsDetected ? [.green, .clear]:[.black, .clear]), startPoint: .top, endPoint: .bottom))
-                .animation(.easeIn(duration: 1.0), value: faceVM.smileIsDetected)
-                .frame(height: 221)
-                .opacity(0.7)
+            RoundedRectangle(cornerRadius: 20)
                 .ignoresSafeArea()
-            Text(faceVM.smileIsDetected ? "Done!": "Please smile")
-                .font(.largeTitle)
-                .fontWeight(.semibold)
-                .foregroundColor(.white)
-                .padding(.top, 50)
+                .foregroundColor(Color("bgColor"))
+                .frame(height: 248)
+            if faceVM.mouthPosition == .none {
+                startView
+            } else if faceVM.mouthPosition == .smile {
+                goodView
+            } else {
+                Button {
+                    messageIsOpen.toggle()
+                } label: {
+                    emergencyMessage
+                }
+            }
+        }.sheet(isPresented: $messageIsOpen) {
+            MessageView()
         }
-        .preferredColorScheme(.dark)
     }
 }
 
-//struct CardFaceView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        CardFaceView()
-//    }
-//}
+
+extension OverlayFaceView {
+    
+    private var startView: some View {
+        VStack{
+            Text("Please smile")
+                .font(.system(size: 30))
+                .fontWeight(.bold)
+                .foregroundColor(.black)
+            Text("🙂")
+                .font(.system(size: 80))
+            Text("""
+             Make sure your face
+             remains in the camera view
+             """)
+            .multilineTextAlignment(.center)
+            .foregroundColor(.black)
+        }
+    }
+    
+    private var goodView: some View {
+        VStack{
+            Text("All good!")
+                .font(.system(size: 30))
+                .fontWeight(.bold)
+                .foregroundColor(.black)
+            Text("✅")
+                .font(.system(size: 80))
+        }
+        .onAppear(){
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                nextStep = true
+            }
+        }
+    }
+    
+    private var emergencyMessage : some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 12)
+                .foregroundColor(.red)
+                .frame(width: 373, height: 64)
+            Text("Send emergency message")
+                .foregroundColor(.white)
+                .fontWeight(.bold)
+        }
+    }
+}

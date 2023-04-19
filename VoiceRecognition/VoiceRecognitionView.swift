@@ -12,38 +12,39 @@ struct VoiceRecognitionView: View {
     
     
     var body: some View {
-        ZStack(alignment: .top){
-            Rectangle()
-                .fill(.linearGradient(Gradient(colors: [.black, .clear]), startPoint: .top, endPoint: .bottom))
-                .frame(height: 300)
-                .opacity(0.8)
-                .ignoresSafeArea()
+        ZStack {
             VStack {
                 Text("Please, repeat after me:")
+                    .font(.system(size: 30))
                     .fontWeight(.bold)
                     .multilineTextAlignment(.center)
-                    .font(.title)
-                    .foregroundColor(.white)
-                    .padding()
-                Text("The sky is blue")
-                    .fontWeight(.bold)
-                    .multilineTextAlignment(.center)
-                    .font(.largeTitle)
-                    .foregroundColor(.white)
-                    .padding()
+                    .foregroundColor(.black)
+                    .padding(.top, 30)
+                Text("🎤")
+                    .font(.system(size: 80))
                 Spacer()
                 Text(voiceRecVM.recognizedText)
             }
             .padding()
-            if voiceRecVM.isRunning{
-                CircleAnimationView()
+            ZStack {
+                if voiceRecVM.isRunning{
+                    CircleAnimationView()
+                }
+                Text("The sky is blue")
+                    .font(.system(size: 40))
+                    .fontWeight(.bold)
+                    .foregroundColor(.black)
+                    .padding()
             }
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color("bgColor"))
+        .ignoresSafeArea()
         .onAppear {
             self.voiceRecVM.startSpeech()
         }
         .fullScreenCover(isPresented: $voiceRecVM.recognitionIsFinished) {
-            TestResultMainView(mainTestVM: voiceRecVM.mainTestViewModel)
+            ResultMainView(voiceRecVM: voiceRecVM)
         }
     }
 }

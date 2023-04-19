@@ -2,14 +2,14 @@ import SwiftUI
 import AVFoundation
 
 struct ContentView: View {
-    @State var animationIsFinished = false
-    @ObservedObject var mainTestViewModel: MainTestViewModel = .init()
+    @State var nextStep = false
     
     var body: some View {
-        if animationIsFinished {
-            VoiceRecognitionView(voiceRecVM: VoiceRecognitionViewModel(mainTestViewModel: mainTestViewModel))
+        if nextStep {
+            VoiceRecognitionView(voiceRecVM: VoiceRecognitionViewModel())
         } else {
-            FaceView(faceVM: FaceViewModel(mainTestVM: mainTestViewModel), animationIsFinished: $animationIsFinished)
+        FaceView(faceVM: FaceViewModel(), nextStep: $nextStep)
         }
+//        MessageView()
     }
 }

@@ -23,7 +23,7 @@ class MessageViewController: UIViewController, MFMessageComposeViewControllerDel
     func displayMessageInterface() {
         let messageVC = MFMessageComposeViewController()
         messageVC.body = "I'm experiencing a stroke and require assistance."
-        messageVC.recipients = ["112","911"]
+        messageVC.recipients = ["112","119","911"]
         messageVC.messageComposeDelegate = self
         self.present(messageVC, animated: true, completion: nil)
     }
@@ -43,7 +43,7 @@ class MessageViewController: UIViewController, MFMessageComposeViewControllerDel
     }
 }
 
-struct HostedMessageViewController: UIViewControllerRepresentable {
+struct MessageView: UIViewControllerRepresentable {
     
     func makeUIViewController(context: Context) -> MessageViewController {
         return MessageViewController()

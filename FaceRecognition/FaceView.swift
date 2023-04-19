@@ -9,19 +9,16 @@ import SwiftUI
 
 struct FaceView: View {
     @ObservedObject var faceVM: FaceViewModel
-    @Binding var animationIsFinished: Bool
+    @Binding var nextStep: Bool
     
     var body: some View {
         ZStack{
             ZStack(alignment: .top){
                 HostedFaceViewController(faceVM: faceVM)
                     .ignoresSafeArea()
-                OverlayFaceView(faceVM: faceVM)
-            }
-            if faceVM.smileIsDetected {
-                LoadingAnimationView(animationIsFinished: $animationIsFinished)
             }
         }
+        .overlay(OverlayFaceView(faceVM: faceVM, nextStep: $nextStep), alignment: .bottom)
         .onAppear() {
             faceVM.startSpeech()
         }

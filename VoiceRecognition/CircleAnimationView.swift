@@ -12,7 +12,7 @@ import Lottie
 struct CircleAnimationView: UIViewRepresentable {
     
     let circleView = LottieAnimationView()
-    var fileName = "2887-listen-state"
+    var fileName = "98125-blue-pulsing-circle"
     
     func makeUIView(context: UIViewRepresentableContext<CircleAnimationView>) -> some UIView {
         let view = UIView()

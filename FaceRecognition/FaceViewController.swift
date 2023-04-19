@@ -63,7 +63,6 @@ class FaceViewController: UIViewController {
         
         view.addSubview(label)
         
-        // Set constraints
         label.translatesAutoresizingMaskIntoConstraints = false
         label.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         label.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
@@ -71,26 +70,22 @@ class FaceViewController: UIViewController {
     
     func handleSmile(leftSmileValue: CGFloat, rightSmileValue: CGFloat) {
         if faceVM.smileIsDetected {
-//            faceVM.mainTestVM.faceTestViewModel.faceTestResult()
             return
         }
         if (leftSmileValue + rightSmileValue)/2 > 0.5 {
             label.text = "Smile"
-            faceVM.mainTestVM.faceTestViewModel.mouthPosition = .smile
+            faceVM.mouthPosition = .smile
             faceVM.smileIsDetected = true
-            faceVM.mainTestVM.faceTestViewModel.faceTest = true
         }
         else if rightSmileValue > 0.3 && leftSmileValue < 0.3{
             label.text = "RightSmile"
-            faceVM.mainTestVM.faceTestViewModel.mouthPosition = .rightSmile
+            faceVM.mouthPosition = .rightSmile
             faceVM.smileIsDetected = true
-            faceVM.mainTestVM.faceTestViewModel.faceTest = false
         }
         else if leftSmileValue > 0.3 && rightSmileValue < 0.3{
             label.text = "LeftSmile"
-            faceVM.mainTestVM.faceTestViewModel.mouthPosition = .leftSmile
+            faceVM.mouthPosition = .leftSmile
             faceVM.smileIsDetected = true
-            faceVM.mainTestVM.faceTestViewModel.faceTest = false
         }
         else{
             label.text = ""
