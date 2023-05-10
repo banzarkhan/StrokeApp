@@ -6,10 +6,9 @@ struct ContentView: View {
     
     var body: some View {
         if nextStep {
-            VoiceRecognitionView(voiceRecVM: VoiceRecognitionViewModel())
+            VoiceRecognitionView(voiceRecVM: VoiceRecognitionViewModel(), progressVM: ProgressViewModel())
         } else {
-        FaceView(faceVM: FaceViewModel(), nextStep: $nextStep)
+            FaceView(faceVM: FaceViewModel(), progressVM: ProgressViewModel(), nextStep: $nextStep)
         }
-//        MessageView()
     }
 }

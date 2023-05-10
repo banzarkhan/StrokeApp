@@ -22,10 +22,3 @@ class FaceViewModel: ObservableObject {
         syntesizer.speak(utterance)
     }
 }
-
-enum MouthPosition {
-    case leftSmile
-    case rightSmile
-    case smile
-    case none
-}

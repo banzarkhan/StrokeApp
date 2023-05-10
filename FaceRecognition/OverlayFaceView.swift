@@ -23,11 +23,7 @@ struct OverlayFaceView: View {
             } else if faceVM.mouthPosition == .smile {
                 goodView
             } else {
-                Button {
-                    messageIsOpen.toggle()
-                } label: {
-                    emergencyMessage
-                }
+                emergencyView
             }
         }.sheet(isPresented: $messageIsOpen) {
             MessageView()
@@ -71,14 +67,29 @@ extension OverlayFaceView {
         }
     }
     
-    private var emergencyMessage : some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 12)
-                .foregroundColor(.red)
-                .frame(width: 373, height: 64)
-            Text("Send emergency message")
-                .foregroundColor(.white)
-                .fontWeight(.bold)
+    private var emergencyView : some View {
+        VStack (spacing: 30){
+            VStack{
+                Text("Warning!")
+                    .font(.system(size: 30))
+                    .fontWeight(.bold)
+                    .foregroundColor(.black)
+                    .padding()
+                Text("Face paralysis detected")
+                    .foregroundColor(.black)
+            }
+            Button {
+                messageIsOpen.toggle()
+            } label: {
+                ZStack {
+                    RoundedRectangle(cornerRadius: 12)
+                        .foregroundColor(.red)
+                        .frame(width: 373, height: 64)
+                    Text("Send emergency message")
+                        .foregroundColor(.white)
+                        .fontWeight(.bold)
+                }
+            }
         }
     }
 }

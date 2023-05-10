@@ -15,6 +15,22 @@ struct ResultMainView: View {
     var body: some View {
         ZStack {
             VStack {
+                HStack{
+                    ProgressView(percent: 100)
+                    ProgressView(percent: 100)
+                }
+                if voiceRecVM.speechCheck == .bad{
+                    VStack{
+                        Text("Warning!")
+                            .foregroundColor(.black)
+                            .fontWeight(.bold)
+                            .font(.system(size: 30))
+                            .padding()
+                        Text("Speech dificulty detected")
+                            .foregroundColor(.black)
+                    }
+                    .padding()
+                }
                 Spacer()
                 HStack {
                     Spacer()
@@ -32,11 +48,7 @@ struct ResultMainView: View {
             if voiceRecVM.speechCheck == .good {
                 goodView
             } else {
-                Button {
-                    messageIsOpened.toggle()
-                } label: {
                     emergencyView
-                }
             }
         }
         .background(Color("bgColor"), ignoresSafeAreaEdges: .all)
@@ -73,19 +85,24 @@ extension ResultMainView {
                     .padding()
                 Text("Test results indicate no stroke symptoms found, but please contact a doctor if you still feel unwell")
                     .multilineTextAlignment(.center)
+                    .foregroundColor(.black)
                     .padding()
             }
         }
     }
     
     private var emergencyView: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 12)
-                .foregroundColor(.red)
-                .frame(width: 373, height: 64)
-            Text("Send emergency message")
-                .foregroundColor(.white)
-                .fontWeight(.bold)
-        }
+            Button {
+                messageIsOpened.toggle()
+            } label: {
+                ZStack {
+                    RoundedRectangle(cornerRadius: 12)
+                        .foregroundColor(.red)
+                        .frame(width: 373, height: 64)
+                    Text("Send emergency message")
+                        .foregroundColor(.white)
+                        .fontWeight(.bold)
+                }
+            }
     }
 }

@@ -9,11 +9,16 @@ import SwiftUI
 
 struct VoiceRecognitionView: View {
     @ObservedObject var voiceRecVM: VoiceRecognitionViewModel
-    
+    @ObservedObject var progressVM: ProgressViewModel
     
     var body: some View {
         ZStack {
             VStack {
+                HStack{
+                    ProgressView(percent: 100)
+                    ProgressView(percent: progressVM.percent)
+                }
+                .padding()
                 Text("Please, repeat after me:")
                     .font(.system(size: 30))
                     .fontWeight(.bold)
@@ -24,6 +29,7 @@ struct VoiceRecognitionView: View {
                     .font(.system(size: 80))
                 Spacer()
                 Text(voiceRecVM.recognizedText)
+                    .foregroundColor(.black)
             }
             .padding()
             ZStack {
@@ -37,11 +43,13 @@ struct VoiceRecognitionView: View {
                     .padding()
             }
         }
+        .padding()
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color("bgColor"))
         .ignoresSafeArea()
         .onAppear {
-            self.voiceRecVM.startSpeech()
+            voiceRecVM.startSpeech()
+            progressVM.startTimer()
         }
         .fullScreenCover(isPresented: $voiceRecVM.recognitionIsFinished) {
             ResultMainView(voiceRecVM: voiceRecVM)

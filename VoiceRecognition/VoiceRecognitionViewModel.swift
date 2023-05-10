@@ -17,7 +17,7 @@ class VoiceRecognitionViewModel: NSObject, ObservableObject, AVSpeechSynthesizer
     let customPhrase = "The sky is blue"
     
     let syntesizer = AVSpeechSynthesizer()
-
+    
     let speechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: "en-US"))
     var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
     var recognitionTask: SFSpeechRecognitionTask?
@@ -80,8 +80,8 @@ class VoiceRecognitionViewModel: NSObject, ObservableObject, AVSpeechSynthesizer
     
     func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
         self.start()
-            print("Speech finished.")
-        }
+        print("Speech finished.")
+    }
     func stop() {
         audioEngine.inputNode.removeTap(onBus: 0)
         audioEngine.stop()
@@ -96,10 +96,4 @@ class VoiceRecognitionViewModel: NSObject, ObservableObject, AVSpeechSynthesizer
             speechCheck = .bad
         }
     }
-}
-
-enum SpeechCheck {
-    case good
-    case bad
-    case none
 }

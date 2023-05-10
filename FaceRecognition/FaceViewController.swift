@@ -53,19 +53,6 @@ class FaceViewController: UIViewController {
         trackingView.frame = view.bounds
         
         view.addSubview(trackingView)
-        
-        buildLabel()
-    }
-    
-    func buildLabel() {
-        label.text = ""
-        label.font = UIFont.systemFont(ofSize: 30)
-        
-        view.addSubview(label)
-        
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        label.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
     }
     
     func handleSmile(leftSmileValue: CGFloat, rightSmileValue: CGFloat) {
@@ -73,22 +60,18 @@ class FaceViewController: UIViewController {
             return
         }
         if (leftSmileValue + rightSmileValue)/2 > 0.5 {
-            label.text = "Smile"
             faceVM.mouthPosition = .smile
             faceVM.smileIsDetected = true
         }
         else if rightSmileValue > 0.3 && leftSmileValue < 0.3{
-            label.text = "RightSmile"
             faceVM.mouthPosition = .rightSmile
             faceVM.smileIsDetected = true
         }
         else if leftSmileValue > 0.3 && rightSmileValue < 0.3{
-            label.text = "LeftSmile"
             faceVM.mouthPosition = .leftSmile
             faceVM.smileIsDetected = true
         }
-        else{
-            label.text = ""
+        else {
         }
     }
     
@@ -101,7 +84,7 @@ extension FaceViewController: ARSCNViewDelegate {
         
         let leftMouthSmileValue = faceAnchor.blendShapes[.mouthSmileLeft] as! CGFloat
         let rightMouthSmileValue = faceAnchor.blendShapes[.mouthSmileRight] as! CGFloat
-
+        
         DispatchQueue.main.async {
             self.handleSmile(leftSmileValue: leftMouthSmileValue, rightSmileValue: rightMouthSmileValue)
         }
@@ -113,8 +96,8 @@ struct HostedFaceViewController: UIViewControllerRepresentable {
     
     func makeUIViewController(context: Context) -> FaceViewController {
         return FaceViewController(faceVM: faceVM)
-        }
-
-        func updateUIViewController(_ uiViewController: FaceViewController, context: Context) {
-        }
+    }
+    
+    func updateUIViewController(_ uiViewController: FaceViewController, context: Context) {
+    }
 }

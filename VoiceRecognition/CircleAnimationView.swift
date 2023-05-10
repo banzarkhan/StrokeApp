@@ -4,6 +4,9 @@
 //
 //  Created by Ariuna Banzarkhanova on 12/04/23.
 //
+// animation was download from LottieFiles.com
+// https://lottiefiles.com/98125-blue-pulsing-circle
+//
 
 import Foundation
 import SwiftUI
